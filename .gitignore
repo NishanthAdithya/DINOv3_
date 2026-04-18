@@ -1,0 +1,21 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Dataset (2 GB — download separately)
+data/
+
+# Checkpoints (large)
+checkpoints/
+
+# Visualisation outputs
+viz_results/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,53 @@
+# ─────────────────────────────────────────────
+# DINOv2/v3 + LoRA Segmentation — training config
+# ─────────────────────────────────────────────
+
+# Encoder
+encoder:
+  name: "facebook/dinov2-base"   # HuggingFace model id for DINOv2
+  use_dinov3: false              # set true + provide hub_repo to use DINOv3
+  dinov3_hub_repo: "author/dinov3"
+  patch_size: 14                 # 14 for ViT-B/14, 16 for ViT-B/16
+
+# LoRA
+lora:
+  rank: 4
+  alpha: 1.0
+  target_keywords:
+    - "query"
+    - "key"
+    - "value"
+    - "dense"
+
+# Decoder / segmentation head
+decoder:
+  num_classes: 21               # 21 for Pascal VOC (incl. background)
+
+# Dataset
+data:
+  root: "./data"
+  image_size: 224               # must be divisible by patch_size
+  num_workers: 0                # 0 = main process (safe on Windows)
+
+# Training
+training:
+  epochs: 5
+  batch_size: 4
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  scheduler: "cosine"           # "cosine" | "step" | "none"
+  warmup_epochs: 1
+  ignore_index: 255             # VOC border pixels
+  amp: false                    # requires CUDA
+  gradient_clip: 1.0
+
+# Checkpointing
+checkpoint:
+  save_dir: "./checkpoints"
+  save_every: 5                 # epochs between saves
+  keep_best: true
+
+# Logging
+logging:
+  log_dir: "./runs"
+  log_every: 50                 # steps between console logs

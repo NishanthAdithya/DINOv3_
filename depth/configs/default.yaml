@@ -1,0 +1,44 @@
+# ─────────────────────────────────────────────────────
+# DINOv2 + LoRA Monocular Depth Estimation — config
+# ─────────────────────────────────────────────────────
+
+encoder:
+  name: "facebook/dinov2-base"
+  patch_size: 14
+
+lora:
+  rank: 4
+  alpha: 1.0
+  target_keywords:
+    - "query"
+    - "key"
+    - "value"
+    - "dense"
+
+depth:
+  max_depth: 10.0              # metres (NYU indoor max ~10 m)
+
+data:
+  h5_path: "../data/nyu_depth_v2.h5"
+  image_size: 224              # must be divisible by patch_size
+  val_fraction: 0.1
+  num_workers: 0               # 0 = safe on Windows
+
+training:
+  epochs: 20
+  batch_size: 4
+  lr: 5.0e-5
+  weight_decay: 1.0e-4
+  scheduler: "cosine"
+  warmup_epochs: 2
+  silog_weight: 1.0
+  grad_weight: 0.5
+  amp: false                   # set true on CUDA
+  gradient_clip: 1.0
+
+checkpoint:
+  save_dir: "./checkpoints"
+  save_every: 5
+
+logging:
+  log_every: 50

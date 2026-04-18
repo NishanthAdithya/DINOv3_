@@ -1,0 +1,26 @@
+# Core deep learning
+torch>=2.1.0
+torchvision>=0.16.0
+
+# HuggingFace (DINOv2 weights + tokenizer)
+transformers>=4.38.0
+
+# Scientific computing
+numpy>=1.24.0
+scikit-learn>=1.3.0      # PCA for feature visualization
+
+# Image processing
+Pillow>=10.0.0
+
+# Config & utilities
+PyYAML>=6.0
+
+# Plotting
+matplotlib>=3.7.0
+
+# Progress bars
+tqdm>=4.65.0
+
+# Optional: notebook support
+jupyter>=1.0.0
+ipykernel>=6.0.0
